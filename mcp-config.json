@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "openshift": {
+      "command": "python",
+      "args": ["openshift_mcp_server.py"],
+      "env": {
+        "OPENSHIFT_CLUSTER_URL": "https://your-cluster.example.com",
+        "OPENSHIFT_TOKEN": "your-openshift-token-here"
+      }
+    }
+  }
+} 
