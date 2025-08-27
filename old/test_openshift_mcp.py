@@ -31,11 +31,14 @@ def test_cluster_connection():
     if not cluster_url or not token:
         print("Error: Please set OPENSHIFT_CLUSTER_URL and OPENSHIFT_TOKEN in your .env file")
         print("You can copy env.example to .env and fill in your values")
+        print("Optional: Set OPENSHIFT_VERIFY_SSL=false for self-signed certificates")
         return False
     
     try:
-        cluster = OpenShiftCluster(cluster_url, token)
-        print(f"✅ Successfully connected to cluster: {cluster_url}")
+        # Get SSL verification setting from environment
+        verify_ssl = os.getenv("OPENSHIFT_VERIFY_SSL", "true").lower() == "true"
+        cluster = OpenShiftCluster(cluster_url, token, verify_ssl)
+        print(f"✅ Successfully connected to cluster: {cluster_url} (SSL verify: {verify_ssl})")
         return cluster
     except Exception as e:
         print(f"❌ Failed to connect to cluster: {e}")

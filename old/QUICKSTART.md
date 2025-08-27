@@ -32,6 +32,7 @@ Edit the `.env` file with your OpenShift cluster details:
 ```env
 OPENSHIFT_CLUSTER_URL=https://your-cluster.example.com
 OPENSHIFT_TOKEN=your-openshift-token-here
+OPENSHIFT_VERIFY_SSL=true
 ```
 
 ### Getting Your OpenShift Token
@@ -94,8 +95,8 @@ Once connected, you can use these MCP tools:
 ### Common Issues
 
 1. **SSL Certificate Errors**
-   - The server is configured to skip SSL verification by default
-   - For production, enable SSL verification in `openshift_cluster.py`
+   - Set `OPENSHIFT_VERIFY_SSL=false` in your `.env` file for self-signed certificates
+   - For production, keep `OPENSHIFT_VERIFY_SSL=true` (default) for secure connections
 
 2. **Authentication Errors**
    - Verify your token is valid and not expired

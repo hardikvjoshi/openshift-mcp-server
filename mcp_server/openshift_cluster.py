@@ -18,9 +18,10 @@ logger = logging.getLogger(__name__)
 class OpenShiftCluster:
     """OpenShift cluster connection and management class."""
     
-    def __init__(self, cluster_url: str, token: str):
+    def __init__(self, cluster_url: str, token: str, verify_ssl: bool = None):
         self.cluster_url = cluster_url
         self.token = token
+        self.verify_ssl = verify_ssl if verify_ssl is not None else True
         self.dynamic_client = None
         self.k8s_client = None
         self._connect()
@@ -32,7 +33,7 @@ class OpenShiftCluster:
             configuration = client.Configuration()
             configuration.host = self.cluster_url
             configuration.api_key = {"authorization": f"Bearer {self.token}"}
-            configuration.verify_ssl = False  # For development - enable SSL verification in production
+            configuration.verify_ssl = self.verify_ssl
             
             # Create dynamic client for OpenShift resources
             k8s_client = client.ApiClient(configuration)
